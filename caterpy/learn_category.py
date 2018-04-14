@@ -17,6 +17,10 @@ def expand_urls(cat_lists):
                   if 'href' in u.attrs]:
             if x.startswith("/"):
                 expanded_urls.add(url+x)
+            if x.startswith("http"):
+                expanded_urls.add(x)
+            if x.startswith("www"):
+                expanded_urls.add(x)
     return expanded_urls
 
 

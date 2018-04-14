@@ -13,6 +13,14 @@ url_lists = {
         'http://playboy.com.br',
         'http://redtube.com',
         'http://youporn.com',
-        'http://tube8.com'
+        'http://tube8.com',
+        'https://www.pornobrasileiro.tv',
+        'http://www.novinhasdozap.com',
+        'https://bucetagostosa.com',
+        'http://www.pornomineiro.com',
+        'http://xvideosporno.blog.br',
+        'http://fodasbrasileiras.com',
+        'http://www.pornocarioca.com',
+        'http://www.pornonacionais.com'
     ]
 }
