@@ -8,7 +8,7 @@ from caterpy.url_lists import url_lists
 from caterpy.get_url_info import url_info, sum_words
 
 
-def expand_urls(cat_lists):
+def expand_urls(cat_lists, unknow=False):
     session = HTMLSession()
     expanded_urls = set([])
     for url in url_lists[cat_lists]:
@@ -17,10 +17,9 @@ def expand_urls(cat_lists):
                   if 'href' in u.attrs]:
             if x.startswith("/"):
                 expanded_urls.add(url+x)
-            if x.startswith("http"):
-                expanded_urls.add(x)
-            if x.startswith("www"):
-                expanded_urls.add(x)
+            if unknow:
+                if x.startswith("http") or x.startswith("www"):
+                    expanded_urls.add(x)
     return expanded_urls
 
 
