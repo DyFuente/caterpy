@@ -17,13 +17,13 @@ def expand_urls(cat_lists, unknow=False):
     expanded_urls = set(urls_to_expand)
     for url in urls_to_expand:
         req = session.get(url)
-        for x in [u.attrs['href'] for u in req.html.find('a')
-                  if 'href' in u.attrs]:
-            if x.startswith("/"):
-                expanded_urls.add(url+x)
-            if unknow:
-                if x.startswith("http") or x.startswith("www"):
-                    expanded_urls.add(x)
+    for x in [u.attrs['href'] for u in req.html.find('a')
+              if 'href' in u.attrs]:
+        if x.startswith("/"):
+            expanded_urls.add(url+x)
+        if unknow:
+            if x.startswith("http") or x.startswith("www"):
+                expanded_urls.add(x)
     return expanded_urls
 
 
