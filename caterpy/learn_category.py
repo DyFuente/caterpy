@@ -10,8 +10,12 @@ from caterpy.get_url_info import url_info, sum_words
 
 def expand_urls(cat_lists, unknow=False):
     session = HTMLSession()
-    expanded_urls = set([])
-    for url in url_lists[cat_lists]:
+    if cat_lists.startswith('http'):
+        urls_to_expand = [cat_lists]
+    else:
+        urls_to_expand = url_lists[cat_lists]
+    expanded_urls = set(urls_to_expand)
+    for url in urls_to_expand:
         req = session.get(url)
         for x in [u.attrs['href'] for u in req.html.find('a')
                   if 'href' in u.attrs]:
@@ -23,10 +27,10 @@ def expand_urls(cat_lists, unknow=False):
     return expanded_urls
 
 
-def cat_words(cat):
+def cat_words(cat, unknow=False):
     """Count words of a category based on an url list."""
     words = sum_words()
-    for url in expand_urls(cat):
+    for url in expand_urls(cat, unknow):
         try:
             _url_info = url_info(url)
             if _url_info:
