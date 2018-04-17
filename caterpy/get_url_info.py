@@ -6,7 +6,7 @@
 import re
 import requests
 from tldextract import extract
-from caterpy.tags import TOKEN_IDS
+from caterpy.tags import TOKEN_IDS, RESERVED_WORDS
 from unidecode import unidecode
 from nltk import pos_tag, download, word_tokenize
 from collections import defaultdict, namedtuple, UserDict
@@ -17,7 +17,7 @@ download('averaged_perceptron_tagger')
 
 urls = defaultdict(lambda: False)
 WORDS = re.compile(r"\w+")
-NUMBERS = re.compile(r"\d+")
+NUMBERS = re.compile(r".*\d[.*]?")
 NO_TAGS = re.compile(r"<[^>]+>")
 
 
@@ -64,7 +64,9 @@ def url_info(url):
         _url.words = sum_words()
         token_words = [pos_tag(word_tokenize(trans_words[unidecode(
             x.lower())]))[0] for x in WORDS.findall(NO_TAGS.sub(
-                " ", get_url.text)) if not NUMBERS.match(x)]
+                " ", get_url.text)) if not NUMBERS.match(x)
+                       if x.lower() not in RESERVED_WORDS.split()
+                       if len(x) >= 3]
         for word in [word for word, t_id in token_words
                      if t_id in TOKEN_IDS]:
             _url.words[word.lower()] = 1
