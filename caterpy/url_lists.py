@@ -22,5 +22,25 @@ url_lists = {
         'http://fodasbrasileiras.com',
         'http://www.pornocarioca.com',
         'http://www.pornonacionais.com'
+    ],
+    'photografy': [
+        'http://www.workpix.com',
+        'http://www.visualphotography.com',
+        'http://www.weddingphotography.itgo.com',
+        'http://www.usinadeimagem.com.br',
+        'http://www.photocolor.com.br',
+        'http://www.ibrush.sw3d.de',
+        'http://www.flowers.fot.br',
+        'http://www.digifoto.com.br',
+        'http://www.cinefoto.com.br',
+        'http://www.audiophoto.com.br',
+        'http://images.google.com.br',
+        'http://www.storybookbride.com',
+        'http://www.peterbrucephotography.com',
+        'http://www.pattigabriel.com',
+        'http://www.photocolor.com.br',
+        'http://www.photoagencia.com.br',
+        'http://www.philbrickphoto.com',
+        'http://www.photographia.com.br'
     ]
 }
