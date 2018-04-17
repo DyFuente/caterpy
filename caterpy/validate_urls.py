@@ -13,11 +13,7 @@ from tldextract import extract
 from collections import defaultdict
 
 
-urls_list = dict()
-
-
 def return_url_dict(url, cat):
-    global urls_list
     protos = [('HTTP', 80), ('HTTPS', 443)]
     """Return a dict of urls."""
     e = extract(url)
@@ -78,13 +74,14 @@ cats_to_validate = list(sorted([x.split('/')[1] for x in glob('lists/*')]))
 
 for cat in cats_to_validate:
 
+    urls_list = dict()
     print("Iniciando validação para: {}".format(cat))
     q_urls = Queue()
     [q_urls.put(x) for x in list(filter(None, open(
         'lists/{}'.format(cat), 'r').read().split('\n')))]
 
     while q_urls.qsize() != 0:
-        if threading.activeCount() < 150:
+        if threading.activeCount() < 300:
             start_process = threading.Thread(
                 target=return_url_dict, args=[q_urls.get(0), cat])
             start_process.start()
@@ -97,3 +94,5 @@ for cat in cats_to_validate:
     print("\n{}Salvando arquivo csv_files/{}.csv\n".format(
         colorama.Fore.YELLOW, cat.lower()))
     save_file(cat.lower())
+    del(urls_list)
+    del(q_urls)
