@@ -13,3 +13,6 @@ HTML_TAGS = ("!DOCTYPE a abbr acronym address applet area article aside audio "
              "section select small source span strike strong style sub summary"
              " sup svg table tbody td template textarea tfoot th thead time "
              "title tr track tt u ul var video wbr")
+
+TOKEN_IDS = ['JJ', 'JJR', 'JJS', 'NN', 'NNS', 'NNP', 'NNPS', 'VB', 'VBD',
+             'VBG', 'VBN', 'VBP', 'VBG']

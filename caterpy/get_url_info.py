@@ -6,11 +6,17 @@
 import re
 import requests
 from tldextract import extract
+from caterpy.tags import TOKEN_IDS
+from nltk import pos_tag, download, word_tokenize
 from collections import defaultdict, namedtuple, UserDict
 
 
+download('punkt')
+download('averaged_perceptron_tagger')
+
 urls = defaultdict(lambda: False)
 WORDS = re.compile(r"\w+")
+NUMBERS = re.compile(r"\d+")
 NO_TAGS = re.compile(r"<[^>]+>")
 
 
@@ -32,6 +38,9 @@ def url_info(url):
         _url.domain = tld.registered_domain
         _url.subdomain = tld.subdomain
         _url.words = sum_words()
-        for word in [x for x in WORDS.findall(NO_TAGS.sub(" ", get_url.text))]:
+        token_words = [pos_tag(word_tokenize(x))[0] for x in WORDS.findall(
+            NO_TAGS.sub(" ", get_url.text)) if not NUMBERS.match(x)]
+        for word in [word for word, t_id in token_words
+                     if t_id in TOKEN_IDS]:
             _url.words[word] = 1
     return _url
