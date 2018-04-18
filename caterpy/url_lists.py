@@ -3,7 +3,7 @@
 """A list of urls by categories."""
 
 url_lists = {
-    'porn': [
+    'porno': [
         'https://xtube.com',
         'https://xvideos.com',
         'https://xhamster.com',
@@ -23,7 +23,7 @@ url_lists = {
         'http://www.pornocarioca.com',
         'http://www.pornonacionais.com'
     ],
-    'photografy': [
+    'fotografia': [
         'http://www.workpix.com',
         'http://www.visualphotography.com',
         'http://www.weddingphotography.itgo.com',
@@ -41,6 +41,77 @@ url_lists = {
         'http://www.photocolor.com.br',
         'http://www.photoagencia.com.br',
         'http://www.philbrickphoto.com',
-        'http://www.photographia.com.br'
+        'http://www.photographia.com.br',
+        'http://www.marceloalmeidafotografia.com.br',
+        'https://pt.wikipedia.org/wiki/Fotografia',
+        'https://guiadoestudante.abril.com.br/profissoes/fotografia',
+        'https://www.photopro.com.br',
+        'http://www.dicasdefotografia.com.br',
+        'https://www.fotografia-dg.com',
+        'https://www.amorpelafotografia.com.br/portal',
+        'https://www.loja.canon.com.br/pt/canonbr',
+        'https://www.socameradigital.com.br'
+    ],
+    'portais': [
+        'http://uol.com.br',
+        'http://ig.com.br',
+        'http://globo.com.br',
+        'http://r7.com.br',
+        'http://g1.com.br',
+        'http://abril.com.br',
+        'http://msn.com.br',
+        'http://terra.com.br',
+        'http://tecmundo.com.br',
+        'http://folha.com.br'
+    ],
+    'animais': [
+        'https://www.peritoanimal.com.br',
+        'https://clubedosanimais.com.br',
+        'https://eanimals.com.br',
+        'https://www.petnanet.com.br',
+        'www.cachorrogato.com.br',
+        'https://meusanimais.com.br',
+        'https://www.mundodosanimais.pt',
+        'www.anuncioanimal.com.br',
+        'www.petexport.com.br',
+        'www.clinicaanimais.com.br',
+        'https://www.mundodosanimais.pt',
+        'www.pea.org.br',
+        'www.ninha.bio.br/biologia/animais_marinhos.html',
+        'http://anjosdomar.org',
+        'www.gremar.org.br'
+
+    ],
+    'armas': [
+        'www.taurusarmas.com.br',
+        'www.brasiltatica.com.br',
+        'https://www.falconarmas.com.br',
+        'https://pt.wikipedia.org/wiki/Arma',
+        'https://www.camuflagemairsoft.com.br',
+        'www.cayanarmas.com.br',
+        'https://www.prohunters.com.br',
+        'www.defesanet.com.br',
+        'https://gearsofwar.com',
+        'https://www.ventureshop.com.br',
+        'http://www.mortesubita.org',
+        'http://www.planecrashinfo.com',
+        'http://sobrenatural.org',
+        'http://urbanlegends.about.com',
+        'http://www.horrorfind.com',
+        'http://www.opentopia.com'
+    ],
+    'arte': [
+        'historia-da-arte.info',
+        'www.casadaarte.com.br',
+        'https://www.sp-arte.com',
+        'aprendendocomarte.org.br',
+        'https://www.galeria9.com.br',
+        'www.palaciodaarte.com.br',
+        'www.nitsche.com.br',
+        'www.dionisioarte.com.br',
+        'https://saga.art.br',
+        'https://www.revistaprosaversoearte.com',
+        'https://www.frutodearte.com.br',
+        'https://www.artcamargo.com.br'
     ]
 }
