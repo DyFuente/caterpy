@@ -2,6 +2,7 @@
 lists/
 testes/
 files/words_to_translate
+csv_files/_*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
