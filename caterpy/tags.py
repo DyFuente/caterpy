@@ -45,4 +45,4 @@ RESERVED_WORDS = ("abstract arguments await boolean break byte case catch char"
                   "select self setinterval settimeout status submit taint "
                   "text textarea top unescape untaint window onblur onclick "
                   "onerror onfocus onkeydown onkeypress onkeyup onmouseover "
-                  "onload onmouseup onmousedown popsettings onsubmit")
+                  "onload onmouseup onmousedown popsettings onsubmit browser")

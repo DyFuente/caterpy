@@ -8,12 +8,13 @@ import requests
 from tldextract import extract
 from caterpy.tags import TOKEN_IDS, RESERVED_WORDS
 from unidecode import unidecode
-from nltk import pos_tag, download, word_tokenize
+from nltk import pos_tag, download, word_tokenize, corpus
 from collections import defaultdict, namedtuple, UserDict
 
 
 download('punkt')
 download('averaged_perceptron_tagger')
+download('words')
 
 urls = defaultdict(lambda: False)
 WORDS = re.compile(r"\w+")
@@ -59,17 +60,28 @@ def return_trans_dict():
 
 def return_valid_words(url_text):
     """Return a list of words valid to the model."""
+    _to_translate = set([])
     _valid_words = sum_words()
     trans_words = return_trans_dict()
+    english_words = set(w.lower() for w in corpus.words.words())
 
     for word in WORDS.findall(NO_TAGS.sub(" ", url_text)):
         if len(word) >= 3:
             _word = unidecode(word.lower().strip())
-        _check_numbers = bool(NUMBERS.match(_word))
-        if _word not in RESERVED_WORDS.split() and not _check_numbers:
-            token = pos_tag(word_tokenize(trans_words[_word]))[0]
-            if token[1] in TOKEN_IDS:
-                _valid_words[token[0]] = 1
+            _check_numbers = bool(NUMBERS.match(_word))
+            if _word not in RESERVED_WORDS.split() and not _check_numbers:
+                token = pos_tag(word_tokenize(trans_words[_word]))[0]
+                if token[1] in TOKEN_IDS and token[0] in english_words:
+                    _valid_words[token[0]] = 1
+                elif token[0] not in english_words:
+                    _to_translate.add(token[0])
+
+    words_to_translate = [w for w in _to_translate
+                          if w not in trans_words.keys()]
+
+    if len(words_to_translate) != 0:
+        with open('files/words_to_translate', 'a') as wtt:
+            wtt.write("\n".join(words_to_translate))
 
     return _valid_words
 
