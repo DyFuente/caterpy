@@ -43,31 +43,49 @@ class sum_words(UserDict):
 
 def return_trans_dict():
     """Return a dict with translated words"""
-    read_translated = [(x.split('|')[0].lower(), x.split('|')[1].lower())
-                       for x in list(filter(None, open(
-                               "files/translated", "r").read().split('\n')))]
+    _read_translated = []
+
+    for line in list(filter(None, open("files/translated").readlines())):
+        untranslated, translated, _ = list(filter(None, line.split('|')))
+        _read_translated.append((unidecode(untranslated.lower().strip()),
+                                 unidecode(translated.lower().strip())))
+
     _trans_dict = trans_words_dict()
-    for word, trans in read_translated:
-        _trans_dict[unidecode(word)] = unidecode(trans)
+    for untranslated, translated in _read_translated:
+        _trans_dict[untranslated] = translated
+
     return _trans_dict
+
+
+def return_valid_words(url_text):
+    """Return a list of words valid to the model."""
+    _valid_words = sum_words()
+    trans_words = return_trans_dict()
+
+    for word in WORDS.findall(NO_TAGS.sub(" ", url_text)):
+        if len(word) >= 3:
+            _word = unidecode(word.lower().strip())
+        _check_numbers = bool(NUMBERS.match(_word))
+        if _word not in RESERVED_WORDS.split() and not _check_numbers:
+            token = pos_tag(word_tokenize(trans_words[_word]))[0]
+            if token[1] in TOKEN_IDS:
+                _valid_words[token[0]] = 1
+
+    return _valid_words
 
 
 def url_info(url):
     """Return info of an url."""
-    trans_words = return_trans_dict()
     _url = namedtuple('url', 'domain subdomain words')
     get_url = requests.get(url)
+
     if get_url.status_code == 200:
         tld = extract(url)
-        _url.domain = tld.registered_domain
+        if tld.registered_domain != '':
+            _url.domain = tld.registered_domain
+        else:
+            _url.domain = tld.domain
         _url.subdomain = tld.subdomain
-        _url.words = sum_words()
-        token_words = [pos_tag(word_tokenize(trans_words[unidecode(
-            x.lower())]))[0] for x in WORDS.findall(NO_TAGS.sub(
-                " ", get_url.text)) if not NUMBERS.match(x)
-                       if x.lower() not in RESERVED_WORDS.split()
-                       if len(x) >= 3]
-        for word in [word for word, t_id in token_words
-                     if t_id in TOKEN_IDS]:
-            _url.words[word.lower()] = 1
+        _url.words = return_valid_words(get_url.text)
+
     return _url

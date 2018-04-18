@@ -37,5 +37,7 @@ def cat_words(cat, unknow=False):
                 for word, value in _url_info.words.items():
                     words[word] = value
         except Exception as error:
+            import sys
+            print(sys.exc_info())
             print(error)
     return words
