@@ -16,14 +16,19 @@ def expand_urls(cat_lists, unknow=False):
         urls_to_expand = url_lists[cat_lists]
     expanded_urls = set(urls_to_expand)
     for url in urls_to_expand:
-        req = session.get(url)
-    for x in [u.attrs['href'] for u in req.html.find('a')
-              if 'href' in u.attrs]:
-        if x.startswith("/"):
-            expanded_urls.add(url+x)
-        if unknow:
-            if x.startswith("http") or x.startswith("www"):
-                expanded_urls.add(x)
+        try:
+            req = session.get(url)
+            for x in [u.attrs['href'] for u in req.html.find('a')
+                      if 'href' in u.attrs]:
+                if x.startswith("/"):
+                    expanded_urls.add(url+x)
+                if unknow:
+                    if x.startswith("http") or x.startswith("www"):
+                        expanded_urls.add(x)
+        except Exception:
+            import sys
+            print(sys.exc_info())
+        pass
     return expanded_urls
 
 
@@ -40,4 +45,5 @@ def cat_words(cat, unknow=False):
             import sys
             print(sys.exc_info())
             print(error)
+            pass
     return words
