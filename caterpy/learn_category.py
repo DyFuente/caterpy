@@ -3,9 +3,14 @@
 """Learn category based on a count of words."""
 
 
+import threading
 from requests_html import HTMLSession
 from caterpy.url_lists import url_lists
 from caterpy.get_url_info import url_info, sum_words
+
+
+global words
+words = sum_words()
 
 
 def expand_urls(cat_lists, unknow=False):
@@ -26,24 +31,31 @@ def expand_urls(cat_lists, unknow=False):
                     if x.startswith("http") or x.startswith("www"):
                         expanded_urls.add(x)
         except Exception:
-            import sys
-            print(sys.exc_info())
-        pass
+            pass
     return expanded_urls
+
+
+def thread_url_info(_url, log=False):
+    global words
+    try:
+        _url_info = url_info(_url)
+        if _url_info:
+            for word, value in _url_info.words.items():
+                words[word] = value
+        if log:
+            print(len(words))
+    except Exception as error:
+        if log:
+            print(error)
+        pass
 
 
 def cat_words(cat, unknow=False):
     """Count words of a category based on an url list."""
-    words = sum_words()
+    global words
     for url in expand_urls(cat, unknow):
-        try:
-            _url_info = url_info(url)
-            if _url_info:
-                for word, value in _url_info.words.items():
-                    words[word] = value
-        except Exception as error:
-            import sys
-            print(sys.exc_info())
-            print(error)
-            pass
+        if threading.activeCount() < 5:
+            start_thread = threading.Thread(target=thread_url_info, args=[url])
+            start_thread.start()
+            start_thread.join()
     return words
