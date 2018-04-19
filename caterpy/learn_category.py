@@ -10,7 +10,6 @@ from caterpy.get_url_info import url_info, sum_words
 
 
 global words
-words = sum_words()
 
 
 def expand_urls(cat_lists, unknow=False):
@@ -53,6 +52,7 @@ def thread_url_info(_url, log=False):
 def cat_words(cat, unknow=False):
     """Count words of a category based on an url list."""
     global words
+    words = sum_words()
     for url in expand_urls(cat, unknow):
         if threading.activeCount() < 5:
             start_thread = threading.Thread(target=thread_url_info, args=[url])
