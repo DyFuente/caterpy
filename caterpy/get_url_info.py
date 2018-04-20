@@ -76,10 +76,9 @@ def return_valid_words(url_text):
                 elif token[0] not in english_words:
                     _to_translate.add(token[0])
 
-    words_to_translate = [w for w in _to_translate
-                          if w not in trans_words.keys()]
-
-    if len(words_to_translate) != 0:
+    if len(_to_translate) != 0:
+        words_to_translate = [w for w in _to_translate
+                              if w not in trans_words.keys()]
         with open('files/words_to_translate', 'a') as wtt:
             wtt.write("\n".join(words_to_translate))
 
@@ -88,16 +87,20 @@ def return_valid_words(url_text):
 
 def url_info(url):
     """Return info of an url."""
-    _url = namedtuple('url', 'domain subdomain words')
-    get_url = requests.get(url)
-
-    if get_url.status_code == 200:
-        tld = extract(url)
-        if tld.registered_domain != '':
-            _url.domain = tld.registered_domain
-        else:
-            _url.domain = tld.domain
-        _url.subdomain = tld.subdomain
-        _url.words = return_valid_words(get_url.text)
+    _url = namedtuple('url', 'status domain subdomain words')
+    _url.status = False
+    try:
+        get_url = requests.get(url)
+        if get_url.status_code == 200:
+            _url.status = True
+            tld = extract(url)
+            if tld.registered_domain != '':
+                _url.domain = tld.registered_domain
+            else:
+                _url.domain = tld.domain
+            _url.subdomain = tld.subdomain
+            _url.words = return_valid_words(get_url.text)
+    except Exception as error:
+        print(error)
 
     return _url

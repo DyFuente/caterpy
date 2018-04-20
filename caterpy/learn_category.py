@@ -36,17 +36,10 @@ def expand_urls(cat_lists, unknow=False):
 
 def thread_url_info(_url, log=False):
     global words
-    try:
-        _url_info = url_info(_url)
-        if _url_info:
-            for word, value in _url_info.words.items():
-                words[word] = value
-        if log:
-            print(len(words))
-    except Exception as error:
-        if log:
-            print(error)
-        pass
+    _url_info = url_info(_url)
+    if _url_info.status:
+        for word, value in _url_info.words.items():
+            words[word] = value
 
 
 def cat_words(cat, unknow=False):
