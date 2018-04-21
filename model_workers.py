@@ -18,10 +18,8 @@ def worker_cat(cat):
 
 while len(cats) != 0:
     if threading.active_count() > 7:
-        print("Threads active: {}".format(threading.active_count()))
         time.sleep(30)
     else:
         cat = cats.pop()
-        print("starting process to: {}".format(cat))
         start_worker = threading.Thread(target=worker_cat, args=[cat])
         start_worker.start()
