@@ -37,7 +37,7 @@ def expand_urls(cat_lists, unknow=False):
 def thread_url_info(_url, log=False):
     global words
     _url_info = url_info(_url)
-    if _url_info.status:
+    if _url_info.status and not isinstance(_url_info.words, (property)):
         for word, value in _url_info.words.items():
             words[word] = value
 
