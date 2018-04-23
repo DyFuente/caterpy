@@ -33,6 +33,6 @@ def return_models(limit=-1, diff=False):
             _diff_models[model] = _data_models[model].difference(
                 *[_data_models[name] for name in _data_models
                   if name != model])
-        return _data_models, _diff_models
+        return _diff_models
 
-    return (_data_models)
+    return _data_models
