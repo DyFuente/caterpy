@@ -13,26 +13,27 @@ def return_models(limit=-1, diff=False):
 
     for model in models:
         name_model = model.split('/')[1]
-        _data_models[name_model] = set([])
-        for w in [word for word, count in list(
-                sorted([(w.split('|')[0], int(w.split('|')[1])) for w in list(
-                    filter(None, open(model, 'r').read().split('\n')))],
-                       key=lambda f: int(f[1]), reverse=True))]:
-            _data_models[name_model].add(w)
+        _data_models[name_model] = []
+        _list_models = []
+        for item in list(filter(None, open(model, 'r').read().split('\n'))):
+            _list_models.append([item.split("|")[0], int(item.split("|")[1])])
+        for word, count in list(sorted(_list_models, key=lambda f: f[1],
+                                       reverse=True)):
+            _data_models[name_model].append(word)
 
-    _intersect = set.intersection(
-        *[_data_models[name] for name in _data_models])
+    _intersect = list(set.intersection(
+        *[set(_data_models[name]) for name in _data_models]))
 
     for model in _data_models:
-        _data_models[model] = set([name for name in _data_models[model]
-                                  if name not in _intersect][0:limit])
+        _data_models[model] = [name for name in _data_models[model]
+                               if name not in _intersect][0:limit]
 
     if diff:
         _diff_models = dict()
         for model in _data_models:
-            _diff_models[model] = _data_models[model].difference(
-                *[_data_models[name] for name in _data_models
-                  if name != model])
+            _diff_models[model] = list(set(_data_models[model]).difference(
+                *[set(_data_models[name]) for name in _data_models
+                  if name != model]))
         return _diff_models
 
     return _data_models
