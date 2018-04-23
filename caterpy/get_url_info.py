@@ -12,9 +12,9 @@ from nltk import pos_tag, download, word_tokenize, corpus
 from collections import defaultdict, namedtuple, UserDict
 
 
-download('punkt')
-download('averaged_perceptron_tagger')
-download('words')
+download('punkt', quiet=True)
+download('averaged_perceptron_tagger', quiet=True)
+download('words', quiet=True)
 
 urls = defaultdict(lambda: False)
 WORDS = re.compile(r"\w+")

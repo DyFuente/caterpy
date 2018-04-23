@@ -3,7 +3,7 @@
 """A list of urls by categories."""
 
 url_lists = {
-    "Audio": [
+    "audio": [
         "https://www.vagalume.com.br",
         "https://www.spotify.com",
         "http://www.musicahudson.com",
@@ -177,7 +177,6 @@ url_lists = {
         "http://www.saocaetanoautomoveis.com.br",
         "http://www.arbexautomoveis.com.br",
         "http://www.greenautomoveis.com.br",
-        "https://www.zoom.com.br",
         "https://www.abla.com.br",
         "http://www.spacemultimarcas.com.br",
         "http://www.joinvillecarros.com.br",
