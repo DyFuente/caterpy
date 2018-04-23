@@ -47,7 +47,7 @@ def cat_words(cat, unknow=False):
     global words
     words = sum_words()
     for url in expand_urls(cat, unknow):
-        if threading.activeCount() < 5:
+        if threading.activeCount() < 10:
             start_thread = threading.Thread(target=thread_url_info, args=[url])
             start_thread.start()
             start_thread.join()
