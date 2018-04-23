@@ -8,7 +8,7 @@ import threading
 from subprocess import call
 from caterpy.url_lists import url_lists
 
-cats = set([c for c in url_lists if c != 'porno'])
+cats = set([c for c in url_lists])
 
 
 def worker_cat(cat):
@@ -17,7 +17,7 @@ def worker_cat(cat):
 
 
 while len(cats) != 0:
-    if threading.active_count() > 7:
+    if threading.active_count() > 10:
         time.sleep(30)
     else:
         cat = cats.pop()

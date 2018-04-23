@@ -9,3 +9,4 @@ six==1.11.0
 sklearn==0.0
 tldextract==2.2.0
 Unidecode==1.0.22
+argparse==1.4.0
