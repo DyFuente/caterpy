@@ -11,8 +11,13 @@ from caterpy.get_models import return_models
 def classify_url(_opts):
     """Retrun categories and the propability of url pertences each one"""
     try:
-        _url_words = cat_words(_opts.url, _opts.expand_urls)
-        _models = return_models(limit=_opts.limit_words)
+        if opts.all_words:
+            en = False
+        else:
+            en = True
+        _url_words = cat_words(_opts.url, unknow=_opts.expand_urls, en=en)
+        _models = return_models(limit=_opts.limit_words,
+                                all_words=_opts.all_words, diff=_opts.diff)
         _data = []
         for model in _models:
             _data.append([model, sum([1 for u in _url_words
@@ -20,7 +25,7 @@ def classify_url(_opts):
         print("\nCategories for {}\n".format(_opts.url))
         for model, prob in list(sorted(_data, key=lambda i: i[1],
                                        reverse=True))[:_opts.limit_class]:
-            print("  Categoria {}: {}".format(model, prob))
+            print("  Category {}: {}".format(model, prob))
     except Exception as error:
         print("Error: {}\nType -h to get help.".format(error))
 
@@ -39,6 +44,10 @@ def return_args():
     _parser.add_argument("-e", "--expand_urls", action="store_true",
                          default=False, help=(
                              "Limit number of words used to classify."))
+    _parser.add_argument("-a", "--all_words", action="store_true",
+                         default=False, help="Classify with all words.")
+    _parser.add_argument("-d", "--diff", action="store_true",
+                         default=False, help="Classify with diff.")
     return _parser.parse_args()
 
 
