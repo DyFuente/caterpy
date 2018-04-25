@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     if opts.english:
         en = ""
-    elif opts.english.startswith('http'):
+    elif opts.category.startswith('http'):
         en = "urls/"
     else:
         en = "pt_BR/"
