@@ -34,20 +34,20 @@ def expand_urls(cat_lists, unknow=False):
     return expanded_urls
 
 
-def thread_url_info(_url):
+def thread_url_info(_url, en):
     global words
-    _url_info = url_info(_url)
+    _url_info = url_info(_url, en)
     if _url_info.status and not isinstance(_url_info.words, (property)):
         for word, value in _url_info.words.items():
             words[word] = value
 
 
-def cat_words(cat, unknow=False):
+def cat_words(cat, unknow=False, en=False):
     """Count words of a category based on an url list."""
     global words
     words = sum_words()
     for url in expand_urls(cat, unknow):
-        start_thread = threading.Thread(target=thread_url_info, args=[url])
+        start_thread = threading.Thread(target=thread_url_info, args=[url, en])
         start_thread.start()
         start_thread.join()
     return words

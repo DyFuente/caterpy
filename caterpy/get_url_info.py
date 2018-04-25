@@ -58,7 +58,7 @@ def return_trans_dict():
     return _trans_dict
 
 
-def return_valid_words(url_text):
+def return_valid_words(url_text, en):
     """Return a list of words valid to the model."""
     _to_translate = set([])
     _valid_words = sum_words()
@@ -70,11 +70,15 @@ def return_valid_words(url_text):
             _word = unidecode(word.lower().strip())
             _check_numbers = bool(NUMBERS.match(_word))
             if _word not in RESERVED_WORDS.split() and not _check_numbers:
-                token = pos_tag(word_tokenize(trans_words[_word]))[0]
-                if token[1] in TOKEN_IDS and token[0] in english_words:
-                    _valid_words[token[0]] = 1
-                elif token[0] not in english_words:
-                    _to_translate.add(token[0])
+                if en:
+                    token = pos_tag(word_tokenize(trans_words[_word]))[0]
+                    if token[1] in TOKEN_IDS and token[0] in english_words:
+                        _valid_words[token[0]] = 1
+                    elif token[0] not in english_words:
+                        _to_translate.add(token[0])
+                else:
+                    if _word not in english_words:
+                        _valid_words[_word] = 1
 
     if len(_to_translate) != 0:
         words_to_translate = [w for w in _to_translate
@@ -85,7 +89,7 @@ def return_valid_words(url_text):
     return _valid_words
 
 
-def url_info(url):
+def url_info(url, en=False):
     """Return info of an url."""
     _url = namedtuple('url', 'status domain subdomain words')
     _url.status = False
@@ -99,7 +103,7 @@ def url_info(url):
             else:
                 _url.domain = tld.domain
             _url.subdomain = tld.subdomain
-            _url.words = return_valid_words(get_url.text)
+            _url.words = return_valid_words(get_url.text, en)
     except Exception as error:
         print(error)
 
