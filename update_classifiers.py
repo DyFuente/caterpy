@@ -26,10 +26,10 @@ if __name__ == "__main__":
 
     if opts.english:
         en = ""
-    elif opts.category.startswith('http'):
-        en = "urls/"
     else:
         en = "pt_BR/"
+    if opts.category.startswith('http'):
+        en = "urls/"
 
     for w, c in item.items():
         with open('classifiers/{}{}'.format(
