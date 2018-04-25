@@ -26,10 +26,12 @@ if __name__ == "__main__":
 
     if opts.english:
         en = ""
+    elif opts.english.startswith('http'):
+        en = "urls/"
     else:
         en = "pt_BR/"
 
     for w, c in item.items():
         with open('classifiers/{}{}'.format(
-                en, opts.category), 'a') as class_model:
+                en, opts.category.split('/')[-1]), 'a') as class_model:
             class_model.write("{}|{}\n".format(w.replace("|", ""), c))
