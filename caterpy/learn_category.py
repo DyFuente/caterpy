@@ -34,7 +34,7 @@ def expand_urls(cat_lists, unknow=False):
     return expanded_urls
 
 
-def thread_url_info(_url, log=False):
+def thread_url_info(_url):
     global words
     _url_info = url_info(_url)
     if _url_info.status and not isinstance(_url_info.words, (property)):
