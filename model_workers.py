@@ -7,6 +7,7 @@ import time
 import argparse
 import threading
 from subprocess import call
+from unidecode import unidecode
 from caterpy.url_lists import url_lists
 
 
@@ -30,10 +31,15 @@ def worker_cat(cat, en, unknow):
 
 if __name__ == "__main__":
     opts = return_args()
+
     if opts.category == "all":
         cats = set([c for c in url_lists])
-    else:
+    elif opts.category.startswith('http'):
         cats = set([opts.category])
+    else:
+        cats = set([c for c in url_lists if unidecode(c) == unidecode(
+            opts.category)])
+
     if opts.english:
         en = "-e"
     else:
