@@ -12,7 +12,8 @@ setup(name="caterpy",
       version='0.1',
       description='A tool to categorize urls.',
       long_description=("Categorize urls by using natural language. "
-                        "Read some web sites to train models to categorize."),
+                        "The scrip classify_url.py read url to categorize."
+                        "Use model_workers.py to train models to categorize."),
       author='Silvio Ap Silva a.k.a Kanazuchi',
       author_email='contato@kanazuchi.com',
       url='http://github.com/kanazux/caterpy',
