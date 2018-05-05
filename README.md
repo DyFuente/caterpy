@@ -2,4 +2,4 @@
 
 A python tool to categorize an url.
 
-WWW: [Caterpy.Info]](http://caterpy.info)
+WWW: [Caterpy.Info](http://caterpy.info)
