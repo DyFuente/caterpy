@@ -6,9 +6,11 @@ with open('requeriments.txt', 'r') as req:
 
 setup(name="caterpy",
       packages=["caterpy"],
+      data_files=[('classifiers', ['classifiers/*.data']),
+                  ('files', ['files/translated'])],
       license="BSD2CLAUSE",
       install_requires=requeriments,
-      scripts=['classify_url.py'],
+      scripts=['scripts/classify_url'],
       version='0.1',
       description='A tool to categorize urls.',
       long_description=("Categorize urls by using natural language. "
