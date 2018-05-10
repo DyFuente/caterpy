@@ -46,7 +46,8 @@ def return_trans_dict():
     """Return a dict with translated words"""
     _read_translated = []
 
-    for line in list(filter(None, open("files/translated").readlines())):
+    for line in list(filter(
+            None, open("/usr/local/etc/translated").readlines())):
         untranslated, translated, _ = list(filter(None, line.split('|')))
         _read_translated.append((unidecode(untranslated.lower().strip()),
                                  unidecode(translated.lower().strip())))
@@ -58,7 +59,7 @@ def return_trans_dict():
     return _trans_dict
 
 
-def return_valid_words(url_text, en):
+def return_valid_words(url_text, en, devel=False):
     """Return a list of words valid to the model."""
     _to_translate = set([])
     _valid_words = sum_words()
@@ -80,11 +81,12 @@ def return_valid_words(url_text, en):
                     if _word not in english_words:
                         _valid_words[_word] = 1
 
-    if len(_to_translate) != 0:
-        words_to_translate = [w for w in _to_translate
-                              if w not in trans_words.keys()]
-        with open('files/words_to_translate', 'a') as wtt:
-            wtt.write("\n".join(words_to_translate))
+    if devel:
+        if len(_to_translate) != 0:
+            words_to_translate = [w for w in _to_translate
+                                  if w not in trans_words.keys()]
+            with open('/usr/local/etc/words_to_translate', 'a') as wtt:
+                wtt.write("\n".join(words_to_translate))
 
     return _valid_words
 

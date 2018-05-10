@@ -10,9 +10,9 @@ from glob import glob
 def return_models(limit=-1, all_words=False, diff=False):
     """Return two dicts with model data and model data with unique words."""
     if all_words:
-        models = [m for m in glob('classifiers/pt_BR/*.data')]
+        models = [m for m in glob('/usr/local/etc/classifiers/pt_BR/*.data')]
     else:
-        models = [m for m in glob('classifiers/*.data')]
+        models = [m for m in glob('/usr/local/etc/classifiers/*.data')]
     _data_models = dict()
 
     for model in models:
