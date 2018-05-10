@@ -55,6 +55,6 @@ if __name__ == "__main__":
             time.sleep(30)
         else:
             cat = cats.pop()
-            start_worker = threading.Thread(target=worker_cat, args=[cat, en,
-                                                                     unknow])
+            start_worker = threading.Thread(
+                target=worker_cat, args=[cat, en, unknow])
             start_worker.start()
