@@ -48,7 +48,8 @@ def return_tags(tags="all"):
                       "text textarea top unescape untaint window onblur onclick "
                       "onerror onfocus onkeydown onkeypress onkeyup onmouseover "
                       "onload onmouseup onmousedown popsettings onsubmit browser")
+
     if tags == "all":
-        return (HTML_TAGS, TOKEN_IDS, RESERVED_WORDS)
+        return HTML_TAGS, TOKEN_IDS, RESERVED_WORDS
     else:
-        return (tags.upper())
+        return eval(tags.upper())

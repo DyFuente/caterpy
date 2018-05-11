@@ -6,11 +6,14 @@
 import re
 import requests
 from tldextract import extract
-from caterpy.tags import TOKEN_IDS, RESERVED_WORDS
+from caterpy.tags import return_tags
 from unidecode import unidecode
 from nltk import pos_tag, download, word_tokenize, corpus
 from collections import defaultdict, namedtuple, UserDict
 
+
+TOKEN_IDS = return_tags('token_ids')
+RESERVED_WORDS = return_tags('reserved_words')
 
 download('punkt', quiet=True)
 download('averaged_perceptron_tagger', quiet=True)
