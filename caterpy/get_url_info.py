@@ -70,7 +70,7 @@ def return_valid_words(url_text, en, devel=False):
     english_words = set(w.lower() for w in corpus.words.words())
 
     for word in WORDS.findall(NO_TAGS.sub(" ", url_text)):
-        if len(word) >= 3:
+        if len(word) > 3:
             _word = unidecode(word.lower().strip())
             _check_numbers = bool(NUMBERS.match(_word))
             if _word not in RESERVED_WORDS.split() and not _check_numbers:
