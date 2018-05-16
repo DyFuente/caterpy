@@ -4,6 +4,7 @@ testes/
 files/words_to_translate
 csv_files/_*
 files/files_teste/*
+files/files_to_classify/*
 classifiers/urls/*
 
 # Byte-compiled / optimized / DLL files
