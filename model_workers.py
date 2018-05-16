@@ -8,7 +8,7 @@ import argparse
 import threading
 from subprocess import call
 from unidecode import unidecode
-from caterpy.url_lists import url_lists
+from caterpy.url_lists import return_url_lists
 
 
 def return_args():
@@ -31,6 +31,7 @@ def worker_cat(cat, en, unknow):
 
 if __name__ == "__main__":
     opts = return_args()
+    url_lists = return_url_lists()
 
     if opts.category == "all":
         cats = set([c for c in url_lists])
@@ -54,6 +55,6 @@ if __name__ == "__main__":
             time.sleep(30)
         else:
             cat = cats.pop()
-            start_worker = threading.Thread(target=worker_cat, args=[cat, en,
-                                                                     unknow])
+            start_worker = threading.Thread(
+                target=worker_cat, args=[cat, en, unknow])
             start_worker.start()

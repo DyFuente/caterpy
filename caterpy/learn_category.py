@@ -5,7 +5,7 @@
 
 import threading
 from requests_html import HTMLSession
-from caterpy.url_lists import url_lists
+from caterpy.url_lists import return_url_lists
 from caterpy.get_url_info import url_info, sum_words
 
 
@@ -14,6 +14,7 @@ global words
 
 def expand_urls(cat_lists, unknow=False):
     session = HTMLSession()
+    url_lists = return_url_lists()
     if cat_lists.startswith('http'):
         urls_to_expand = [cat_lists]
     else:

@@ -32,6 +32,6 @@ if __name__ == "__main__":
         en = "urls/"
 
     for w, c in item.items():
-        with open('classifiers/{}{}'.format(
+        with open('classifiers/{}{}.data'.format(
                 en, opts.category.split('/')[-1]), 'a') as class_model:
             class_model.write("{}|{}\n".format(w.replace("|", ""), c))
