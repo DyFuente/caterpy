@@ -23,12 +23,12 @@ key = base64.b64encode('caterpy_classify_url'.encode())
 
 
 def save_file(file_name, data_file, source_ip, source_port):
-    _name = "{}-{}".format(source_ip, file_name)
+    _name = "{}-{}".format(source_ip, file_name.decode())
     print("Connection with IP: {} in the port {}!".format(
         source_ip, source_port))
     print("Saving file on files/files_to_classify/{}".format(_name))
-    with open("files/files_to_classify/{}".format(_name), "w") as s_file:
-        s_file.write("".join(data_file))
+    with open("files/files_to_classify/{}".format(_name), "wb") as s_file:
+        s_file.write(b"".join(data_file))
 
 
 while True:
@@ -44,8 +44,8 @@ while True:
                     data = []
                     get_data = conn.recv(1024)
                     while get_data != b"":
-                        data.append(get_data.decode())
-                        get_data = conn.recv(1026)
-                save_file(get_file_name.decode(), data, addr[0], addr[1])
+                        data.append(get_data)
+                        get_data = conn.recv(1024)
+                save_file(get_file_name, data, addr[0], addr[1])
     except Exception as error:
         print(error)

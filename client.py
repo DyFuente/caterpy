@@ -30,6 +30,5 @@ with client:
         client.send("{}-{}".format(file_name, time_file).encode())
     get_data = client.recv(1024)
     if get_data == "send_file".encode():
-        read_file = open(get_file, 'rb')
-        get_data = read_file.read()
-        client.send(get_data)
+        with open(get_file, 'rb') as read_file:
+            client.send(read_file.read())
