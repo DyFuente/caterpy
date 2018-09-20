@@ -1,0 +1,108 @@
+---
+- hosts: caterpy.com
+  become: yes
+
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: Add apt repositories
+      apt_repository:
+        repo: deb http://deb.debian.org/debian-security/ stretch/updates main contrib non-free
+        state: present
+
+    - name: Update Packages
+      apt:
+        name: "*"
+        update_cache: yes
+
+  handlers:
+    - name: Emperor
+      shell: "{{ item }}"
+      with_items:
+        - source /usr/local/www/caterpy/bin/activate
+        - /bin/sh /usr/local/www/catery/emperor.sh
+
+  tasks:
+    - name: Get sw for apt
+      apt: name={{ packages }} state=present
+      vars:
+        packages:
+          - python3-dev
+          - build-essential
+          - python-pip
+          - virtualenv
+          - nginx
+          - git
+          - vim
+          - uwsgi-plugin-python3
+
+    - name: copy requeriments
+      copy:
+        src: "../files/requeriments.txt"
+        dest: "/usr/local/etc/requeriments.txt"
+        mode: 0655
+        owner: root
+        group: root
+
+    - name: Create Caterpy Directory
+      file:
+        path: "/usr/local/www/caterpy/"
+        mode: 0755
+        owner: www-data
+        group: www-data
+        state: directory
+        recurse: yes
+
+    - name: Create uWSGI log Directory
+      file:
+        path: "/var/log/uwsgi/"
+        mode: 0755
+        owner: www-data
+        group: www-data
+        state: directory
+        recurse: yes
+
+    - name: Update pip
+      shell: >
+        pip install --upgrade pip
+
+    - name: Install virtualenv
+      pip:
+        virtualenv: /usr/local/www/caterpy/
+        requirements: /usr/local/etc/requeriments.txt
+        virtualenv_python: python3
+
+    - name: Create Caterpy Directory
+      file:
+        path: "/opt/projetos"
+        mode: 0755
+        owner: root
+        group: root
+        state: directory
+        recurse: yes
+
+    - name: Clone Caterpy Repo
+      git:
+        repo: https://github.com/kanazux/caterpy
+        dest: /opt/projetos/caterpy
+        force: yes
+
+    - name: Copy web files to directories
+      shell: "{{ item }}"
+      with_items:
+        - /bin/cp /opt/projetos/caterpy/web_site/conf_files/nginx.conf /etc/nginx/
+        - /bin/cp /opt/projetos/caterpy/web_site/conf_files/uwsgi_params /etc/nginx/
+        - /bin/cp /opt/projetos/caterpy/web_site/caterpy_app.py /usr/local/www/caterpy/
+        - /bin/cp /opt/projetos/caterpy/web_site/scripts/emperor.sh /usr/local/www/caterpy/
+        - /bin/cp /opt/projetos/caterpy/web_site/conf_files/caterpy_uwsgi.ini /usr/local/etc/
+        - /bin/cp -r /opt/projetos/caterpy/web_site/static /usr/local/www/caterpy/
+        - /bin/cp -r /opt/projetos/caterpy/web_site/templates /usr/local/www/caterpy/
+
+    - name: Change permission for emperor
+      file:
+        path: /usr/local/www/caterpy/emperor.sh
+        owner: www-data
+        group: www-data
+        mode: 0755
+      notify: Emperor
