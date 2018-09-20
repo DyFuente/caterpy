@@ -21,7 +21,7 @@
       shell: "{{ item }}"
       with_items:
         - source /usr/local/www/caterpy/bin/activate
-        - /bin/sh /usr/local/www/catery/emperor.sh
+        - /bin/sh /usr/local/www/caterpy/emperor.sh
 
   tasks:
     - name: Get sw for apt
