@@ -1,5 +1,5 @@
 ---
-- hosts: caterpy.com
+- hosts: caterpy.info
   become: yes
 
   vars_files:
@@ -20,8 +20,7 @@
     - name: Emperor
       shell: "{{ item }}"
       with_items:
-        - source /usr/local/www/caterpy/bin/activate
-        - /bin/sh /usr/local/www/caterpy/emperor.sh
+        - /bin/bash /usr/local/www/caterpy/emperor.sh
 
   tasks:
     - name: Get sw for apt
