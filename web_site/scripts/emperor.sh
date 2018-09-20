@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Start new process of uwsgi and restart nginx.
 
 PROC=`pgrep -fl uwsgi`
