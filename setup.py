@@ -4,7 +4,7 @@ from setuptools import setup
 
 classifiers = glob('classifiers/*.data')
 classifiers_pt_BR = glob('classifiers/pt_BR/*.data')
-with open('requeriments.txt', 'r') as req:
+with open('requirements.txt', 'r') as req:
     requeriments = list(filter(None, req.read().split('\n')))
 
 setup(name="caterpy",

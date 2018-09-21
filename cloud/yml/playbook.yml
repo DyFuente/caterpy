@@ -38,8 +38,8 @@
 
     - name: copy requeriments
       copy:
-        src: "../files/requeriments.txt"
-        dest: "/usr/local/etc/requeriments.txt"
+        src: "../files/requirements.txt"
+        dest: "/usr/local/etc/requirements.txt"
         mode: 0655
         owner: root
         group: root
