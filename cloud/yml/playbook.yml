@@ -6,7 +6,7 @@
     - vars.yml
 
   pre_tasks:
-    - name: Add apt repositories
+    - name: Add APT Repositories
       apt_repository:
         repo: deb http://deb.debian.org/debian-security/ stretch/updates main contrib non-free
         state: present
@@ -17,13 +17,13 @@
         update_cache: yes
 
   handlers:
-    - name: Emperor
+    - name: Start Emperor
       shell: "{{ item }}"
       with_items:
         - /bin/bash /usr/local/www/caterpy/emperor.sh
 
   tasks:
-    - name: Get sw for apt
+    - name: Install Software With APT-GET
       apt: name={{ packages }} state=present
       vars:
         packages:
@@ -36,7 +36,7 @@
           - vim
           - uwsgi-plugin-python3
 
-    - name: copy requeriments
+    - name: Copy Requirements
       copy:
         src: "../files/requirements.txt"
         dest: "/usr/local/etc/requirements.txt"
@@ -53,7 +53,7 @@
         state: directory
         recurse: yes
 
-    - name: Create uWSGI log Directory
+    - name: Create uWSGI Log Directory
       file:
         path: "/var/log/uwsgi/"
         mode: 0755
@@ -72,7 +72,7 @@
         requirements: /usr/local/etc/requirements.txt
         virtualenv_python: python3
 
-    - name: Create Caterpy Directory
+    - name: Create Project Directory
       file:
         path: "/opt/projetos"
         mode: 0755
@@ -87,7 +87,7 @@
         dest: /opt/projetos/caterpy
         force: yes
 
-    - name: Copy web files to directories
+    - name: Copy Web Files to Directories
       shell: "{{ item }}"
       with_items:
         - /bin/cp /opt/projetos/caterpy/web_site/conf_files/nginx.conf /etc/nginx/
@@ -98,10 +98,10 @@
         - /bin/cp -r /opt/projetos/caterpy/web_site/static /usr/local/www/caterpy/
         - /bin/cp -r /opt/projetos/caterpy/web_site/templates /usr/local/www/caterpy/
 
-    - name: Change permission for emperor
+    - name: Change Permission for Emperor
       file:
         path: /usr/local/www/caterpy/emperor.sh
         owner: www-data
         group: www-data
         mode: 0755
-      notify: Emperor
+      notify: Start Emperor
