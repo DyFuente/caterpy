@@ -1,0 +1,31 @@
+---
+- hosts: caterpy.info
+  become: yes
+
+  vars_files:
+    - vars.yml
+
+  handlers:
+    - name: Emperor
+      shell: "{{ item }}"
+      with_items:
+        - /bin/bash /usr/local/www/caterpy/emperor.sh
+
+  tasks:
+    - name: Clone Caterpy Repo
+      git:
+        repo: https://github.com/kanazux/caterpy
+        dest: /opt/projetos/caterpy
+        force: yes
+
+    - name: Copy web files to directories
+      shell: "{{ item }}"
+      with_items:
+        - /bin/cp /opt/projetos/caterpy/web_site/conf_files/nginx.conf /etc/nginx/
+        - /bin/cp /opt/projetos/caterpy/web_site/conf_files/uwsgi_params /etc/nginx/
+        - /bin/cp /opt/projetos/caterpy/web_site/caterpy_app.py /usr/local/www/caterpy/
+        - /bin/cp /opt/projetos/caterpy/web_site/scripts/emperor.sh /usr/local/www/caterpy/
+        - /bin/cp /opt/projetos/caterpy/web_site/conf_files/caterpy_uwsgi.ini /usr/local/etc/
+        - /bin/cp -r /opt/projetos/caterpy/web_site/static /usr/local/www/caterpy/
+        - /bin/cp -r /opt/projetos/caterpy/web_site/templates /usr/local/www/caterpy/
+      notify: Emperor

@@ -69,7 +69,7 @@
     - name: Install virtualenv
       pip:
         virtualenv: /usr/local/www/caterpy/
-        requirements: /usr/local/etc/requeriments.txt
+        requirements: /usr/local/etc/requirements.txt
         virtualenv_python: python3
 
     - name: Create Caterpy Directory
