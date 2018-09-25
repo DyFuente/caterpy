@@ -1,14 +1,15 @@
 ---
-- hosts: caterpy.info
+- hosts: kanazuchi.local
+  remote_user: vagrant
   become: yes
 
   vars_files:
     - vars.yml
 
   pre_tasks:
-    - name: Add APT Repositories
+    - name: Add APT Repository Testing for Python3.6
       apt_repository:
-        repo: deb http://deb.debian.org/debian-security/ stretch/updates main contrib non-free
+        repo: deb http://ftp.de.debian.org/debian testing main
         state: present
 
     - name: Update Packages
@@ -27,6 +28,7 @@
       apt: name={{ packages }} state=present
       vars:
         packages:
+          - python3.6
           - python3-dev
           - build-essential
           - python-pip
@@ -61,10 +63,6 @@
         group: www-data
         state: directory
         recurse: yes
-
-    - name: Update pip
-      shell: >
-        pip install --upgrade pip
 
     - name: Install virtualenv
       pip:
